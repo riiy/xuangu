@@ -27,7 +27,7 @@ def stock_lst(data):
     if resp['success']:
         return resp['result']['data']
     else:
-        print(resp)
+        logger.info(resp)
         return []
 
 
@@ -130,12 +130,11 @@ if __name__ == '__main__':
 
     for i in stock_set:
         if i in ['宇信科技', '中原传媒', '永辉超市', '大族激光', '歌尔股份']:
-            print(i)
-    print(res_dict)
+            logger.info(i)
     for i in res_list:
         if i[1] < 3:
             continue
         if '彼得林奇' in stock_set[i[0]] and '格雷厄姆' in stock_set[i[0]]:
-            print(i[0], stock_set[i[0]])
+            logger.info(f'{i[0]}: {"-".join(stock_set[i[0]])}')
         if '社保大量持股' in stock_set[i[0]]:
-            print(i[0], stock_set[i[0]])
+            logger.info(f'{i[0]}: {"-".join(stock_set[i[0]])}')

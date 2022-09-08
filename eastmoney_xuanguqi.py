@@ -1,3 +1,5 @@
+import sys
+
 import requests
 from collections import Counter
 from loguru import logger
@@ -138,3 +140,9 @@ if __name__ == '__main__':
             logger.info(f'{i[0]}: {"-".join(stock_set[i[0]])}')
         if '社保大量持股' in stock_set[i[0]]:
             logger.info(f'{i[0]}: {"-".join(stock_set[i[0]])}')
+
+
+    if len(sys.argv) == 2:
+        logger.info(sys.argv)
+        if sys.argv[1] in stock_set:
+            logger.info(stock_set[sys.argv[1]])

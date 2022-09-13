@@ -121,7 +121,13 @@ def get_stock_list():
         if stock['SECURITY_NAME_ABBR'] not in stock_set:
             stock_set[stock['SECURITY_NAME_ABBR']] = []
         stock_set[stock['SECURITY_NAME_ABBR']].append('估值三低')
-
+    # 北向资金
+    data = '------WebKitFormBoundary\r\nContent-Disposition: form-data; name="type"\r\n\r\nRPTA_APP_STOCKSELECT\r\n------WebKitFormBoundary\r\nContent-Disposition: form-data; name="sty"\r\n\r\nSECUCODE,SECURITY_CODE,SECURITY_NAME_ABBR,NEW_PRICE,CHANGE_RATE,\r\n------WebKitFormBoundary\r\nContent-Disposition: form-data; name="filter"\r\n\r\n(HOLD_RATIO_RANK <=50)\r\n------WebKitFormBoundary\r\nContent-Disposition: form-data; name="p"\r\n\r\n1\r\n------WebKitFormBoundary\r\nContent-Disposition: form-data; name="ps"\r\n\r\n100\r\n------WebKitFormBoundary\r\nContent-Disposition: form-data; name="sr"\r\n\r\n-1\r\n------WebKitFormBoundary\r\nContent-Disposition: form-data; name="st"\r\n\r\nCHANGE_RATE\r\n------WebKitFormBoundary\r\nContent-Disposition: form-data; name="source"\r\n\r\nSELECT_SECURITIES\r\n------WebKitFormBoundary\r\nContent-Disposition: form-data; name="client"\r\n\r\nAPP\r\n------WebKitFormBoundary\r\nContent-Disposition: form-data; name="ct"\r\n\r\n\r\n------WebKitFormBoundary\r\nContent-Disposition: form-data; name="ut"\r\n\r\n\r\n------WebKitFormBoundary--\r\n'
+    for stock in stock_lst(data):
+        all_result.append(stock)
+        if stock['SECURITY_NAME_ABBR'] not in stock_set:
+            stock_set[stock['SECURITY_NAME_ABBR']] = []
+        stock_set[stock['SECURITY_NAME_ABBR']].append('北向资金')
     return all_result, stock_set
 
 if __name__ == '__main__':
@@ -135,13 +141,12 @@ if __name__ == '__main__':
             logger.info(i)
     if len(sys.argv) == 1:
         for i in res_list:
-            if i[1] < 3:
+            if i[1] < 2:
                 continue
             if '彼得林奇' in stock_set[i[0]] and '格雷厄姆' in stock_set[i[0]]:
                 logger.info(f'{i[0]}: {"-".join(stock_set[i[0]])}')
             if '社保大量持股' in stock_set[i[0]]:
                 logger.info(f'{i[0]}: {"-".join(stock_set[i[0]])}')
-
 
     if len(sys.argv) == 2:
         logger.info(sys.argv)
